@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: API de Gestión de Usuarios y Productos
+  description: API para la gestión de usuarios y productos del sistema
+  version: 1.0.0
+  contact:
+    name: Soporte Técnico
+    email: soporte@example.com
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor de desarrollo
+
+paths:
+  /users:
+    post:
+      summary: Crear un nuevo usuario
+      description: Crea un nuevo usuario en el sistema
+      operationId: createUser
+      tags:
+        - Usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: Usuario creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Error en la solicitud
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: El email ya existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: Listar usuarios
+      description: Obtiene la lista de usuarios registrados en el sistema
+      operationId: listUsers
+      tags:
+        - Usuarios
+      parameters:
+        - name: page
+          in: query
+          description: Número de página a consultar
+          required: false
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: per_page
+          in: query
+          description: Cantidad de elementos por página
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+
+  /products:
+    post:
+      summary: Crear un nuevo producto asíncronamente
+      description: Inicia la creación asíncrona de un nuevo producto en el sistema
+      operationId: createProductAsync
+      tags:
+        - Productos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+      responses:
+        '202':
+          description: Solicitud aceptada para procesamiento asíncrono
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncResponse'
+        '400':
+          description: Error en la solicitud
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Error de validación
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: Listar productos
+      description: Obtiene la lista de productos registrados en el sistema
+      operationId: listProducts
+      tags:
+        - Productos
+      responses:
+        '200':
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+
+components:
+  schemas:
+    CreateUserRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email del usuario
+        password:
+          type: string
+          format: password
+          description: Contraseña del usuario
+          minLength: 8
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único del usuario
+        email:
+          type: string
+          format: email
+          description: Email del usuario
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del usuario
+
+    CreateProductRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Nombre del producto
+          minLength: 1
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único del producto
+        name:
+          type: string
+          description: Nombre del producto
+
+    AsyncResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Mensaje informativo sobre el procesamiento asíncrono
+        request_id:
+          type: string
+          format: uuid
+          description: Identificador único de la solicitud asíncrona
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Mensaje de error 
