@@ -11,7 +11,7 @@ Esta es una API REST construida en Ruby siguiendo los principios de la Arquitect
 
 1. Clonar el repositorio:
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/hornosg/products-ruby.git
 cd products-ruby
 ```
 
