@@ -1,0 +1,86 @@
+### Ruby ###
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+# Logs
+*.log
+*.log.*
+/log/
+
+# Dependencias específicas del proyecto
+/.bundle/
+/vendor/bundle
+/lib/bundler/man/
+
+# Archivos locales que pueden contener información sensible
+.env
+.env.*
+*.env
+
+# Para Rack apps
+.rbc
+capybara-*.html
+.rspec
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-[0-9]*
+/public/system
+/public/uploads
+
+# Editor y sistema operativo
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+.project
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# Archivos específicos de Ruby
+.ruby-version
+.ruby-gemset
+.rvmrc
+.byebug_history
+.irb_history
+.pry_history
+
+# Directorios de caché
+.sass-cache/
+/node_modules/
+/.pnp
+.pnp.js
+/coverage/
+
+# Directorios generados localmente
+/public/packs/
+/public/packs-test/
+/public/assets/
+
+# Ignorar los archivos temporales de configuración de bundler
+/.bundle/config
+
+# Ignorar archivos de ejecución de Sidekiq
+/dump.rdb
+
+# Si usas dotenv
+/.env*
+!/.env.example
+
+# RSpec
+/spec/tmp
+
+# Cache de Yard
+.yardoc
+/_yardoc/
+/doc/ 
